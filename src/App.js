@@ -3,9 +3,7 @@ import { useState } from 'react'
 const getRandomInt =(max)=>{
   return Math.floor(Math.random() * max);
 }
-const Display = () => {
-  
-}
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often',
@@ -39,7 +37,7 @@ const App = () => {
       <button onClick={changeClick}>Next anecdote</button>
       <button onClick={voteClick}>vote</button>
       <h2>Anecdote with the most votes</h2>
-      
+      <footer><a href="https://github.com/naderkamelaponar/fs-anecdotes">Repo</a> </footer>
     </div>
   )
 }
