@@ -10,9 +10,9 @@ const FilterAnec = ()=>{
         marginBottom: 10
       }
     return (
-        <div style={style}>
+        <p style={style}>
             filter : <input name='anecFilter' onChange={handleChange} />
-        </div>
+        </p>
     )
 }
 export default FilterAnec

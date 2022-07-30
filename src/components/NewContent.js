@@ -1,13 +1,15 @@
 // بسم الله الرحمن الرحيم
 import { useDispatch } from 'react-redux'
 import { newAnec } from '../reducers/anecdoteReducer'
+import contentServices from '../services/contents'
 const NewContent = ()=>{
     const dispatch = useDispatch()
-    const handleSubmit=(e)=>{
+    const handleSubmit=async(e)=>{
         e.preventDefault()
         const content= e.target.anecContent.value
         if (!content) return 
-        dispatch(newAnec(content))
+        const newContent = await contentServices.newAnec(content)
+        dispatch(newAnec(newContent))
         e.target.anecContent.value=''
       }
     return (

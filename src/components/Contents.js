@@ -1,9 +1,14 @@
 // بسم الله الرحمن الرحيم
-import { newVote } from '../reducers/anecdoteReducer'
+import { voteToAnec } from '../reducers/anecdoteReducer'
 import { useSelector, useDispatch } from 'react-redux'
 import { notification } from '../reducers/notificationReducer'
+import { useEffect } from 'react'
+import { initializeAnecs } from '../reducers/anecdoteReducer'
 const ContenetList =()=>{
   const dispatch = useDispatch()
+  useEffect(()=>{
+    dispatch(initializeAnecs())
+  },[dispatch])
     const anecList= useSelector(({anecdotes,filter})=>{
       if (!filter) return anecdotes
       const newList = anecdotes.filter(a=>{
@@ -11,13 +16,10 @@ const ContenetList =()=>{
        })
       return newList
     })
-    const newList = [...anecList].sort((a,b)=>{
-      return b.votes-a.votes
-    })
-    const vote = (anecdote) => {dispatch(newVote(anecdote.id))
-    dispatch(notification(anecdote.content))} 
+    const vote = (anecdote) => {dispatch(voteToAnec(anecdote.id))
+    dispatch(notification(anecdote.content,10))} 
    return (<>
-    {newList.map((anecdote,i) =>
+    {anecList.map((anecdote,i) =>
         <div key={i}>
           <p>
             {anecdote.content} has <b>{anecdote.votes}</b> votes
