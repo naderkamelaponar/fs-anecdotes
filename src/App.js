@@ -14,7 +14,7 @@ const App = () => {
   return (
     <div>
       <h1> بسم الله الرحمن الرحيم</h1>
-      <h2>Anecdotes fs-6.18</h2>
+      <h2>Anecdotes fs-6.21</h2>
       <Notification />
    
       <FilterAnec /> <NewContent />
