@@ -1,10 +1,9 @@
 // بسم الله الرحمن الرحيم
-import { useDispatch } from 'react-redux'
+import { connect } from 'react-redux'
 import { filterChange } from '../reducers/filterReducer'
-const FilterAnec = ()=>{
-    const dispatch = useDispatch()
+const FilterAnec = (props)=>{ 
     const handleChange=(e)=>{
-        dispatch(filterChange(e.target.value))
+        props.filterChange(e.target.value)
     }
     const style = {
         marginBottom: 10
@@ -15,4 +14,4 @@ const FilterAnec = ()=>{
         </p>
     )
 }
-export default FilterAnec
+export default connect(null,{filterChange})(FilterAnec) 

@@ -1,15 +1,18 @@
 // بسم الله الرحمن الرحيم
-import { useDispatch } from 'react-redux'
-import { newAnec } from '../reducers/anecdoteReducer'
-import contentServices from '../services/contents'
-const NewContent = ()=>{
-    const dispatch = useDispatch()
+import { connect } from 'react-redux'
+import {createAnec} from '../reducers/anecdoteReducer'
+import { notification } from '../reducers/notificationReducer'
+const NewContent = (props)=>{
+    
     const handleSubmit=async(e)=>{
         e.preventDefault()
         const content= e.target.anecContent.value
-        if (!content) return 
-        const newContent = await contentServices.newAnec(content)
-        dispatch(newAnec(newContent))
+        if (!content) {
+          props.notification('input anecdote content',5)
+          return
+        }
+        props.createAnec(content)
+        props.notification(`you have added ${content} to list`)
         e.target.anecContent.value=''
       }
     return (
@@ -22,4 +25,5 @@ const NewContent = ()=>{
         </>
     )
 }
-export default NewContent
+
+export default connect(null,{createAnec,notification})(NewContent)
