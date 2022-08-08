@@ -1,46 +1,43 @@
 // بسم الله الرحمن الرحيم
-import { createSlice } from '@reduxjs/toolkit'
+//import { createSlice } from '@reduxjs/toolkit'
 import contentServices from '../services/contents'
-const initialState = []
-const anecSlice = createSlice({
-  name:'anecdotes',
-  initialState,
-  reducers:{
-    newAnec (state,action){
-      state.push(action.payload)
-    },
-    newVote (state,action){
-     
-      const id =  action.payload.id
-      const getContent= state.find(n=>n.id === id)
-      const newContent = {
-        ...getContent , votes:getContent.votes+1
-      }
-      return state.map(n=> n.id === id ? newContent: n).sort((a,b)=>{
-      return b.votes-a.votes})
-    },
-    appndAnec(state,action){
-     state.push(action.payload) 
-    },
-    setAnec(state,action){
-      return action.payload
+const anecReducer = (state=[],action)=>{
+switch (action.type){
+  case 'ALL':
+    return action.data.sort((a,b)=>{return b.votes-a.votes})
+  case 'NEW':
+    return [...state,action.data]
+  case 'VOTE':
+    const id =  action.data.id
+    const getContent= state.find(n=>n.id === id)
+    const newContent = {
+      ...getContent , votes:getContent.votes+1
     }
-  }
+    return state.map(n=> n.id === id ? newContent: n)
+    .sort((a,b)=>{return b.votes-a.votes})
+  default: return state
+}
+}
 
-})
-export const { setAnec,newAnec,newVote,appndAnec} =  anecSlice.actions
-export const initializeAnecs = ()=>{
+const initializeAnecs = ()=>{
   return async dispatch=>{
-    const aneces = await contentServices.getAll()
-    dispatch(setAnec(aneces))
+    const res = await contentServices.getAll()
+    dispatch({type:'ALL',data:res})
   }
 }
-export const voteToAnec = (id)=>{
+const voteToAnec = (id)=>{
   return async dispatch =>{
     const res= await contentServices.voteToAnec(id)
-    dispatch(newVote(res))
+    dispatch({type:'VOTE',data:res})
   }
 }
+const createAnec=(anec)=>{
+  return async dispatch =>{
+    const res= await contentServices.newAnec(anec)
+    dispatch({type:'NEW',data:res})
+  }
+}
+export  {createAnec,voteToAnec,initializeAnecs}
 
-export {initialState}
-export default anecSlice.reducer
+
+export default anecReducer

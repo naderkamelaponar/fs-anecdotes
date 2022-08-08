@@ -1,32 +1,35 @@
 // بسم الله الرحمن الرحيم
-import { voteToAnec } from '../reducers/anecdoteReducer'
-import { useSelector, useDispatch } from 'react-redux'
+
+import {  connect } from 'react-redux'
 import { notification } from '../reducers/notificationReducer'
-import { useEffect } from 'react'
-import { initializeAnecs } from '../reducers/anecdoteReducer'
-const ContenetList =()=>{
-  const dispatch = useDispatch()
-  useEffect(()=>{
-    dispatch(initializeAnecs())
-  },[dispatch])
-    const anecList= useSelector(({anecdotes,filter})=>{
-      if (!filter) return anecdotes
-      const newList = anecdotes.filter(a=>{
-        return a.content.includes(filter) || a.content.match(filter)
-       })
-      return newList
-    })
-    const vote = (anecdote) => {dispatch(voteToAnec(anecdote.id))
-    dispatch(notification(anecdote.content,10))} 
-   return (<>
-    {anecList.map((anecdote,i) =>
-        <div key={i}>
+import {voteToAnec} from '../reducers/anecdoteReducer'
+const Content = ({anecdote,handleVote})=>{
+        return (
+          <div >
           <p>
             {anecdote.content} has <b>{anecdote.votes}</b> votes
           </p>
-          <button onClick={() => vote(anecdote)}>vote</button>
-          </div>
-      )}
-   </>)
+          <button onClick={handleVote}>vote</button>
+        </div>
+        )
 }
-export default ContenetList
+const ContenetList =(props)=>{
+  const handleVote=(anec)=>{
+      props.voteToAnec(anec.id)
+      props.notification(`You Have Voted for ${anec.content} `,7)
+  }
+    return (
+      <>
+      {props.anecdotes.map((anec,i)=>{
+       return <Content key={i} anecdote={anec} handleVote={()=>{handleVote(anec)}} />
+      })}
+      </>
+    )
+}
+const mapStateToProps =(state)=>{
+  let res = state.filter?state.anecdotes.filter(a=>{return a.content.includes(state.filter)}):state.anecdotes
+  return {anecdotes:res}
+}
+const mapDispatchToProps={notification,voteToAnec}
+const connectedAnecs = connect(mapStateToProps,mapDispatchToProps)(ContenetList)
+export default connectedAnecs

@@ -17,8 +17,7 @@
     "react": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "start": "json-server  -H https://frozen-temple-44136.herokuapp.com --watch db.json",
-    "startx": "json-server -p3001 --watch db.json",
+    "start": "json-server -p3001 --watch db.json",
     "eject": "react-scripts eject",
     "deploy-netlify": "netlify deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_ACCESS_TOKEN --prod --dir=./build "
   },
