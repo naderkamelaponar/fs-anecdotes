@@ -6,6 +6,7 @@ const NewContent = ()=>{
     const handleSubmit=(e)=>{
         e.preventDefault()
         const content= e.target.anecContent.value
+        if (!content) return 
         dispatch(newAnec(content))
         e.target.anecContent.value=''
       }
