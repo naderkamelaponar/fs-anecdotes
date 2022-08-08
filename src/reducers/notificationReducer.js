@@ -12,12 +12,12 @@ const setNotifyMsg = (msg)=>{
 const clearNotify =()=>{
     return {type:'STOP'}
 }
-const notification =(msg)=>{
+const notification =(msg,seconds = 5)=>{
     return dispatch=>{
         dispatch(setNotifyMsg(msg))
         setTimeout(()=>{
         dispatch(clearNotify())
-        },5000)}
+        },seconds * 1000)}
 }
 export {notification}
 export default notifyReducer
