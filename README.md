@@ -1,4 +1,5 @@
-# Helsinki full stack part 1 anecdotes 
+# بسم الله الرحمن الرحيم
+### fs-6.8
 
 ### `npm start`
 
