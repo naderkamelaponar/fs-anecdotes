@@ -21,3 +21,7 @@ It correctly bundles React in production mode and optimizes the build for the be
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
+### Deploy State 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/d4863f86-906a-4da0-93cb-a4ae6e1e0878/deploy-status)](https://app.netlify.com/sites/astounding-valkyrie-a88601/deploys)
+### Live Site 
+[Anecdotes](https://astounding-valkyrie-a88601.netlify.app/)
